@@ -1,0 +1,15 @@
+{
+  "name": "ermiibotjs",
+  "version": "1.0.0",
+  "description": "Multipurpose bot by Ermelber",
+  "main": "ermiibot.js",
+  "dependencies": {
+    "discord.js": "^11.4.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ermelber",
+  "license": "ISC"
+}
