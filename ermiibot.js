@@ -1,18 +1,39 @@
+module.exports = 
+{
+	reload(message)
+	{
+		message.channel.send("Reloading files...");
+		loadCommandFiles(true);
+		message.channel.send("Reload successful!");
+	}
+}
+
 const fs = require('fs');
 const path = require('path');
 const Discord = require('discord.js');
 const { prefix, token } = require('./settings.json');
-
 const client = new Discord.Client();
-client.commands = new Discord.Collection();
 
-const commandFiles = fs.readdirSync(path.resolve(__dirname, 'commands')).filter(file => file.endsWith('.js'));
-
-for (const file of commandFiles) 
+/////////////////////// Command Loader /////////////////////////////
+var commandFiles;
+function loadCommandFiles(reload)
 {
-	const command = require(`./commands/${file}`);
-	client.commands.set(command.name, command);
+	client.commands = new Discord.Collection();
+	commandFiles = fs.readdirSync(path.resolve(__dirname, 'commands')).filter(file => file.endsWith('.js'));
+
+	for (const file of commandFiles)
+	{
+		if (reload)
+		{
+			//clears the require cache
+			delete require.cache[require.resolve(`./commands/${file}`)];
+		}
+		const command = require(`./commands/${file}`);
+		client.commands.set(command.name, command);
+	}
 }
+loadCommandFiles(false);
+////////////////////////////////////////////////////////////////////
 
 client.once('ready', () => 
 {
@@ -57,7 +78,7 @@ client.on('message', message =>
     catch (error) 
     {
 			console.error(error);
-			message.reply('There was an error trying to execute that command!');
+			message.reply('there was an error trying to execute that command!');
 		}
 });
 

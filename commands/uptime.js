@@ -8,8 +8,7 @@ module.exports = {
 
         dir = exec("uptime", function(err, stdout, stderr) 
         {
-            message.channel.send(`Uptime: ${stdout}`);
-            //console.log(stdout);
+            message.reply(`\`\`${stdout}\`\``);
         });
 	},
 };
