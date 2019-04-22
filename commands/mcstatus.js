@@ -1,19 +1,58 @@
 module.exports = {
     name: 'mcstatus',
-    aliases: ['m'],
+    aliases: ['mc'],
 	description: 'Minecraft server status',
     execute(message, args) 
     {
-        var ms = require("./../other/minestat.js");
-        ms.init("127.0.0.1", 25565, function(result)
+        var ms = require("./../other/mcping.js");
+        ms.getServerData("127.0.0.1", 25565, (response, data) =>
         {
-            if(ms.online)
+            if(response == "ok")
             {
-                message.channel.send(`${ms.motd} (Version ${ms.version})\nCurrently playing: ${ms.current_players}/${ms.max_players} players`);
+                fields = 
+                [
+                    {
+                        name: `Message of the day`,
+                        value: data.description.text
+                    },
+                    {
+                        name: `Server Version`,
+                        value: data.version.name
+                    },
+                    {
+                        name: `Currently playing`,
+                        value: `${data.players.online}/${data.players.max}`
+                    }
+                ];
+
+                if (data.players.sample != null)
+                {
+                    var playerList = "";
+
+                    for (var i = 0; i < data.players.sample.length; i++)
+                    {
+                        var player = data.players.sample[i];
+                        playerList += player.name + "\n";
+                    }
+
+                    fields.push({
+                        name: `Players`,
+                        value: playerList
+                    });
+                }
+                
+                message.channel.send({
+                    embed: 
+                    {
+                        color: 3447003,
+                        title: "Minecraft Server Status",
+                        fields: fields
+                    }
+                });
             }
             else
             {
-                message.reply("The server is offline.");
+                message.reply("couldn't reach the server.");
             }
         });
 	},

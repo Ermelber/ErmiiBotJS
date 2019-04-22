@@ -1,3 +1,9 @@
+const fs = require('fs');
+const path = require('path');
+const Discord = require('discord.js');
+const { prefix, token } = require('./settings.json');
+const client = new Discord.Client();
+
 module.exports = 
 {
 	reload(message)
@@ -5,14 +11,12 @@ module.exports =
 		message.channel.send("Reloading files...");
 		loadCommandFiles(true);
 		message.channel.send("Reload successful!");
+	},
+	getCommands()
+	{
+		return client.commands;
 	}
 }
-
-const fs = require('fs');
-const path = require('path');
-const Discord = require('discord.js');
-const { prefix, token } = require('./settings.json');
-const client = new Discord.Client();
 
 /////////////////////// Command Loader /////////////////////////////
 var commandFiles;
@@ -37,7 +41,8 @@ loadCommandFiles(false);
 
 client.once('ready', () => 
 {
-    console.log('Ready!');
+	client.user.setActivity(`${prefix}help`);
+	console.log('Ready!');
 });
 
 
