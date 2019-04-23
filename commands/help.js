@@ -11,7 +11,6 @@ module.exports = {
 
         commands.tap(command =>
         {
-            console.log(command);
             fields.push(
             {
                 name: `${command.name} (${command.aliases})`,
