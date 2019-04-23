@@ -5,10 +5,9 @@ module.exports = {
     execute(message, args) 
     {
         var exec = require('child_process').exec;
-        dir = exec("uptime", function(err, stdout, stderr) 
+        dir = exec("uptime", function(err, stdout, stderr)
         {
             var info = parseUptimeString(stdout);
-            console.log(info);
             message.channel.send({
                 embed: 
                 {
