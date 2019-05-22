@@ -1,7 +1,8 @@
 module.exports = {
     name: 'uptime',
     aliases: ['u'],
-	description: 'Server uptime',
+    description: 'Server uptime',
+    disabled: true,
     execute(message, args) 
     {
         var exec = require('child_process').exec;

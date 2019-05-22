@@ -8,8 +8,10 @@ module.exports =
 {
 	reload(message)
 	{
+		logger("reloading");
 		message.channel.send("Reloading files...");
 		loadCommandFiles(true);
+		logger("reloaded");
 		message.channel.send("Reload successful!");
 	},
 	getCommands()
@@ -39,10 +41,56 @@ function loadCommandFiles(reload)
 loadCommandFiles(false);
 ////////////////////////////////////////////////////////////////////
 
+function logger(type, message, commandName, error)
+{
+	var now = new Date();
+	if (type == "ready")
+	{
+		console.log(`[${now.toLocaleDateString()} ${now.toLocaleTimeString()}] [INFO] ErmiiBot is ready`);
+	}
+	else if (type == "reloading")
+	{
+		console.log(`[${now.toLocaleDateString()} ${now.toLocaleTimeString()}] [INFO] Reloading command files...`);
+	}
+	else if (type == "reloaded")
+	{
+		console.log(`[${now.toLocaleDateString()} ${now.toLocaleTimeString()}] [INFO] Commands files have been reloaded`);
+	}
+	else if (type == "command" || type == "commanderror")
+	{
+		var origin = message.guild != null ? message.guild.name : "Direct Message";
+
+		if (type == "command")
+		{
+			console.log(`[${now.toLocaleDateString()} ${now.toLocaleTimeString()}] [INFO] [${origin}] ${message.author.username} issued command: ${commandName}`);
+		}
+		if (type == "commanderror")
+		{
+			console.log(`[${now.toLocaleDateString()} ${now.toLocaleTimeString()}] [ERROR] [${origin}] An error has occured while ${author} tried executing the command: ${commandName}:`);
+			console.error(error);
+		}	
+	}
+	else if (type == "error")
+	{
+		console.log(`[${now.toLocaleDateString()} ${now.toLocaleTimeString()}] [ERROR] A fatal error has occured!`);
+	}
+}
+
+function waterInit()
+{
+	var water = require("./other/water.js");
+	setInterval(() => 
+	{
+		water.checkWaterHour(client);
+	}, 60000);
+}
+
 client.once('ready', () => 
 {
 	client.user.setActivity(`${prefix}help`);
-	console.log('Ready!');
+	logger("ready");
+
+	waterInit();
 });
 
 
@@ -59,32 +107,41 @@ client.on('message', message =>
 
 	if (!command) return;
 
-    if (command.guildOnly && message.channel.type !== 'text') 
-    {
-			return message.reply('I can\'t execute that command inside DMs!');
+	if (command.disabled != null && command.disabled) return;
+
+	logger("command", message, command.name);
+
+	if (command.guildOnly && message.channel.type !== 'text') 
+	{
+		return message.reply('I can\'t execute that command inside DMs!');
+	}
+
+	if (command.args && !args.length) 
+	{
+		let reply = `You didn't provide any arguments, ${message.author}!`;
+
+		if (command.usage) 
+		{
+			reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
 		}
 
-    if (command.args && !args.length) 
-    {
-			let reply = `You didn't provide any arguments, ${message.author}!`;
+		return message.channel.send(reply);
+	}
 
-        if (command.usage) 
-        {
-					reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
-				}
+	try 
+	{
+		command.execute(message, args);
+	} 
+	catch (error) 
+	{
+		logger("commanderror", message, commandName, error);
+		message.reply('there was an error trying to execute that command!');
+	}
+});
 
-			return message.channel.send(reply);
-		}
-
-    try 
-    {
-			command.execute(message, args);
-    } 
-    catch (error) 
-    {
-			console.error(error);
-			message.reply('there was an error trying to execute that command!');
-		}
+client.on("error", () =>
+{
+	logger("error");
 });
 
 client.login(token);

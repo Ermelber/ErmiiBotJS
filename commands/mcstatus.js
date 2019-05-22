@@ -11,7 +11,7 @@ module.exports = {
 function getInfo(message)
 {
     var ms = require("./../other/mcping.js");
-    ms.getServerData("127.0.0.1", 25565, (response, data) =>
+    ms.getServerData("176.199.217.168", 25565, (response, data) =>
     {
         if(response == "ok")
         {
