@@ -11,11 +11,14 @@ module.exports = {
 
         commands.tap(command =>
         {
-            fields.push(
+            if (command.disabled == null || !command.disabled)
             {
-                name: `${command.name} (${command.aliases})`,
-                value: command.description
-            });
+                fields.push(
+                {
+                    name: `${command.name} (${command.aliases})`,
+                    value: command.description
+                });
+            }
         });
 
         message.channel.send({

@@ -1,7 +1,8 @@
 module.exports = {
     name: 'mcsize',
     aliases: ['s'],
-	description: 'Minecraft Server Disk Usage',
+    description: 'Minecraft Server Disk Usage',
+    disabled: true,
     execute(message, args) 
     {
         getInfo(message);

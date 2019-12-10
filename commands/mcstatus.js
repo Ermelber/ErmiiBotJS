@@ -4,14 +4,18 @@ module.exports = {
 	description: 'Minecraft Server Status',
     execute(message, args) 
     {
-        getInfo(message);
+        getInfo(message, args[0], args[1]);
 	},
 };
 
-function getInfo(message)
+function getInfo(message, hostname, port)
 {
     var ms = require("./../other/mcping.js");
-    ms.getServerData("127.0.0.1", 25565, (response, data) =>
+
+    hostname = hostname == null ? "dshack.ddns.net" : hostname;
+    port = port == null ? 25565 : port;
+
+    ms.getServerData(hostname, port, (response, data) =>
     {
         if(response == "ok")
         {
@@ -50,8 +54,13 @@ function getInfo(message)
             message.channel.send({
                 embed: 
                 {
+                    author: 
+                    {
+                        name : "Minecraft Server Status",
+                        url : `https://eu.mc-api.net/v3/server/favicon/${hostname}:${port}`,
+                        icon_url : `https://eu.mc-api.net/v3/server/favicon/${hostname}:${port}`
+                    },
                     color: 3447003,
-                    title: "Minecraft Server Status",
                     fields: fields
                 }
             });

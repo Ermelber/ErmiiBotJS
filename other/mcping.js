@@ -76,21 +76,67 @@ function readResponse(data)
 
 module.exports =
 {
+    getServerDataFromMcApi(address, port, callback)
+    {
+        var http = require('http');
+
+        return http.get(
+        {
+            host: 'eu.mc-api.net',
+            path: `/v3/server/ping/${address}:${port}`
+        }, 
+        function(response) 
+        {
+            // Continuously update stream with data
+            var body = '';
+            
+            response.on('data', function(d) {
+                body += d;
+            });
+
+            response.on('end', function()
+            {
+                console.log(body);
+
+                var parsed = JSON.parse(body);
+                callback("ok", parsed);
+            });
+
+            response.on('error', function()
+            {
+                callback("error");
+            });
+        });
+    },
     getServerData(address, port, callback)
     {
         const net = require("net");
     
         var client = net.connect(port, address, () =>
         {
-            //Connect Listener
-            client.write(getHandshakePacket(address, port));
-            client.write(getRequestPacket());
+            try
+            {
+                //Connect Listener
+                client.write(getHandshakePacket(address, port));
+                client.write(getRequestPacket());
+            }
+            catch (ex)
+            {
+                
+            }
         });
 
         client.on('data', (data) =>
         {
-            callback("ok", readResponse(data));
-            client.end();
+            try
+            {
+                callback("ok", readResponse(data));
+                client.end();
+            }
+            catch (ex)
+            {
+                
+            }
         });
 
         client.on("error", () =>
