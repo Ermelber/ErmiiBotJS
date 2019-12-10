@@ -70,4 +70,5 @@ function getInfo(message, hostname, port)
             message.reply("couldn't reach the server.");
         }
     });
+
 }

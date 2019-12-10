@@ -7,8 +7,15 @@ module.exports =
             /*var channel = client.channels.get("475377868738920448"); //shitpost-realm
             channel.send(`<@&572540171678121984>\n\n:exclamation::exclamation:W A R N I N G:exclamation::exclamation:\n\nIt's real water hours. :potable_water:\n\nTake a glass of water as fast as possible!\nhttp://pluspng.com/img-png/water-glass-hd-png-water-glass-png-1200.png`);*/
             
+            //var channel = client.channels.get("475377868738920448"); //shitpost-realm
+            //channel.send(`<@&572540171678121984>\n\n:exclamation::exclamation:W A R N I N G:exclamation::exclamation:\n\nIt's real water hours. :potable_water:\n\nTake a glass of water as fast as possible!\nhttps://cdn.discordapp.com/attachments/475377868738920448/632546413733085195/unknown.png`);
+            
+            const { list } = require('./water.json');
+
+            var element = list[Math.floor(Math.random() * list.length)];
+
             var channel = client.channels.get("475377868738920448"); //shitpost-realm
-            channel.send(`<@&572540171678121984>\n\n:exclamation::exclamation:W A R N I N G:exclamation::exclamation:\n\nIt's real water hours. :potable_water:\n\nTake a glass of water as fast as possible!\nhttps://cdn.discordapp.com/attachments/475377868738920448/632546413733085195/unknown.png`);
+            channel.send(element.message + element.url);
 
             var canale = client.channels.get("562374071212572704"); //comun-uffizio
             canale.send("@everyone\n\n:exclamation::exclamation:A V V E R T E N Z A:exclamation::exclamation:\n\nÈ giunto l'attimo d'abbeverarsi d'acqva, poichè l'istante de l'idratazione è benuto! :potable_water: \nhttps://i.imgur.com/sLT5wTm.png`")
