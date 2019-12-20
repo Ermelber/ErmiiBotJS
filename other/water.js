@@ -10,9 +10,7 @@ module.exports =
             //var channel = client.channels.get("475377868738920448"); //shitpost-realm
             //channel.send(`<@&572540171678121984>\n\n:exclamation::exclamation:W A R N I N G:exclamation::exclamation:\n\nIt's real water hours. :potable_water:\n\nTake a glass of water as fast as possible!\nhttps://cdn.discordapp.com/attachments/475377868738920448/632546413733085195/unknown.png`);
             
-            const { list } = require('./water.json');
-
-            var element = list[Math.floor(Math.random() * list.length)];
+            var element = getWaterHourData();
 
             var channel = client.channels.get("475377868738920448"); //shitpost-realm
             channel.send(element.message + element.url);
@@ -27,4 +25,17 @@ function isWaterHour()
 {
     var date = new Date();
     return date.getHours() == 23 && date.getMinutes() == 29;
+}
+
+function getDayOfTheWeek(){
+    var date = new Date();
+    return (date.toLocaleString('en-US', { weekday: 'short'}));
+}
+
+function getWaterHourData(){
+    const { list } = require('./water.json');
+
+    var filtered = list.filter(f => f.days.includes(getDayOfTheWeek()));
+
+    return filtered[Math.floor(Math.random() * filtered.length)];
 }
