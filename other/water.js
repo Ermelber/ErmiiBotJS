@@ -24,7 +24,7 @@ module.exports =
 function isWaterHour()
 {
     var date = new Date();
-    return date.getHours() == 23 && date.getMinutes() == 29;
+    return date.getHours() == 21 && date.getMinutes() == 29;
 }
 
 function getDayOfTheWeek(){
