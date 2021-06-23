@@ -1,4 +1,3 @@
-
 const { mcHostName } = require('../settings.json');
 
 module.exports = {

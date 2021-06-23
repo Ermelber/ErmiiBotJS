@@ -67,7 +67,7 @@ function logger(type, message, commandName, error)
 		}
 		if (type == "commanderror")
 		{
-			console.log(`[${now.toLocaleDateString()} ${now.toLocaleTimeString()}] [ERROR] [${origin}] An error has occured while ${author} tried executing the command: ${commandName}:`);
+			console.log(`[${now.toLocaleDateString()} ${now.toLocaleTimeString()}] [ERROR] [${origin}] An error has occured while ${message.author.username} tried executing the command: ${commandName}:`);
 			console.error(error);
 		}	
 	}

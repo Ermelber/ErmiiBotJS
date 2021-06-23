@@ -1,11 +1,14 @@
+const { adminUserIds } = require('../settings.json');
+
 module.exports = {
     name: 'reload',
     aliases: ['r'],
 	description: 'Dynamically reloads bot\'s files',
     execute(message, args) 
     {
-        //Owners are hardcoded for now
-        if (message.author.id != "188650807120494592" /*Ermelber*/ && message.author.id != "177432416959332353" /*Szymbar*/)
+        console.log(adminUserIds);
+
+        if (!adminUserIds || !adminUserIds.includes(message.author.id))
         {
             message.reply("you don't have permission for this!");
             return;
