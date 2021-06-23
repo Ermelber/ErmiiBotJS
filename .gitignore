@@ -4,3 +4,4 @@ nohup.out
 npm-debug.log
 package-lock.json
 run.bat
+node_modules/
