@@ -1,15 +1,13 @@
 module.exports =
 {
-    checkWaterHour(client)
-    {
-        if (isWaterHour())
-        {
+    checkWaterHour(client) {
+        if (isWaterHour()) {
             /*var channel = client.channels.get("475377868738920448"); //shitpost-realm
             channel.send(`<@&572540171678121984>\n\n:exclamation::exclamation:W A R N I N G:exclamation::exclamation:\n\nIt's real water hours. :potable_water:\n\nTake a glass of water as fast as possible!\nhttp://pluspng.com/img-png/water-glass-hd-png-water-glass-png-1200.png`);*/
-            
+
             //var channel = client.channels.get("475377868738920448"); //shitpost-realm
             //channel.send(`<@&572540171678121984>\n\n:exclamation::exclamation:W A R N I N G:exclamation::exclamation:\n\nIt's real water hours. :potable_water:\n\nTake a glass of water as fast as possible!\nhttps://cdn.discordapp.com/attachments/475377868738920448/632546413733085195/unknown.png`);
-            
+
             var element = getWaterHourData();
 
             var channel = client.channels.get("475377868738920448"); //shitpost-realm
@@ -21,18 +19,17 @@ module.exports =
     }
 }
 
-function isWaterHour()
-{
+function isWaterHour() {
     var date = new Date();
     return date.getHours() == 21 && date.getMinutes() == 29;
 }
 
-function getDayOfTheWeek(){
+function getDayOfTheWeek() {
     var date = new Date();
-    return (date.toLocaleString('en-US', { weekday: 'short'}));
+    return (date.toLocaleString('en-US', { weekday: 'short' }));
 }
 
-function getWaterHourData(){
+function getWaterHourData() {
     const { list } = require('./water.json');
 
     var filtered = list.filter(f => f.days.includes(getDayOfTheWeek()));

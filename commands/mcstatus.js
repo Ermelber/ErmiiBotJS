@@ -3,16 +3,14 @@ const { mcHostName } = require('../settings.json');
 module.exports = {
     name: 'mcstatus',
     aliases: ['mc'],
-	description: 'Minecraft Server Status',
-    execute(message, args) 
-    {
+    description: 'Minecraft Server Status',
+    execute(message, args) {
         getInfo(message, args[0]);
-	},
+    },
 };
 
 
-function ping(hostname, complete)
-{
+function ping(hostname, complete) {
     var http = require("https");
 
     var options = {
@@ -24,20 +22,19 @@ function ping(hostname, complete)
     };
 
     var req = http.request(options, function (res) {
-    var chunks = [];
+        var chunks = [];
 
-    res.on("data", function (chunk) {
-        chunks.push(chunk);
-    });
+        res.on("data", function (chunk) {
+            chunks.push(chunk);
+        });
 
-    res.on("end", function () {
-        var body = Buffer.concat(chunks);
-        
-        if (complete)
-        {
-            complete(JSON.parse(body.toString()));
-        }
-    });
+        res.on("end", function () {
+            var body = Buffer.concat(chunks);
+
+            if (complete) {
+                complete(JSON.parse(body.toString()));
+            }
+        });
     });
 
     req.end();
@@ -45,35 +42,31 @@ function ping(hostname, complete)
 
 
 
-function getInfo(message, hostname)
-{
+function getInfo(message, hostname) {
     hostname = hostname == null ? mcHostName : hostname;
 
     ping(hostname, (data) => {
-        if(data.status && data.online)
-        {
-            fields = 
-            [
-                {
-                    name: `Message of the day`,
-                    value: data.description.text
-                },
-                {
-                    name: `Server Version`,
-                    value: data.version.name
-                },
-                {
-                    name: `Currently playing`,
-                    value: `${data.players.online}/${data.players.max}`
-                }
-            ];
+        if (data.status && data.online) {
+            fields =
+                [
+                    {
+                        name: `Message of the day`,
+                        value: data.description.text
+                    },
+                    {
+                        name: `Server Version`,
+                        value: data.version.name
+                    },
+                    {
+                        name: `Currently playing`,
+                        value: `${data.players.online}/${data.players.max}`
+                    }
+                ];
 
-            if (data.players.sample != null)
-            {
+            if (data.players.sample != null) {
                 var playerList = "";
 
-                for (var i = 0; i < data.players.sample.length; i++)
-                {
+                for (var i = 0; i < data.players.sample.length; i++) {
                     var player = data.players.sample[i];
                     playerList += player.name + "\n";
                 }
@@ -85,21 +78,20 @@ function getInfo(message, hostname)
             }
 
             message.channel.send({
-                embed: 
+                embed:
                 {
-                    author: 
+                    author:
                     {
-                        name : "Minecraft Server Status",
-                        url : data.favicon,
-                        icon_url : data.favicon
+                        name: "Minecraft Server Status",
+                        url: data.favicon,
+                        icon_url: data.favicon
                     },
                     color: 3447003,
                     fields: fields
                 }
             });
         }
-        else
-        {
+        else {
             message.reply("couldn't reach the server.");
         }
     });

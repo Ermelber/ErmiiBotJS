@@ -1,9 +1,9 @@
-function getDayOfTheWeek(){
+function getDayOfTheWeek() {
     var date = new Date();
-    return (date.toLocaleString('en-US', { weekday: 'short'}));
+    return (date.toLocaleString('en-US', { weekday: 'short' }));
 }
 
-function getWaterHourData(){
+function getWaterHourData() {
     const { list } = require('./other/water.json');
 
     var filtered = list.filter(f => f.days.includes(getDayOfTheWeek()));

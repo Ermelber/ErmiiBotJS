@@ -2,10 +2,9 @@ module.exports = {
     name: 'pizza',
     aliases: ['p'],
     description: 'Sends pizza pictures',
-    execute(message, args)
-    {
+    execute(message, args) {
         const { list } = require('./pizza.json');
 
         message.reply("Te piace accussì?\n" + list[Math.floor(Math.random() * list.length)].url);
-	},
+    },
 };

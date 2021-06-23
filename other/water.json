@@ -1,25 +1,35 @@
 {
-    "list" :
-    [
+    "list": [
         {
-            "message": "<@&572540171678121984>\n\n:exclamation::exclamation:W A R N I N G:exclamation::exclamation:\n\nI really hate mondays. But even on days like these, I really enjoy drinking some water at this hour. :potable_water:\n\nYou'd better do it as well!\n", 
+            "message": "<@&572540171678121984>\n\n:exclamation::exclamation:W A R N I N G:exclamation::exclamation:\n\nI really hate mondays. But even on days like these, I really enjoy drinking some water at this hour. :potable_water:\n\nYou'd better do it as well!\n",
             "url": "https://i.pinimg.com/236x/f6/e3/3a/f6e33a2a771546b6d055818246f6499f--drinking-coffee-garfield.jpg",
-            "days": ["Mon"]
+            "days": [
+                "Mon"
+            ]
         },
-        { 
-            "message": "<@&572540171678121984>\n\n:exclamation::exclamation:W A R N I N G:exclamation::exclamation:\n\nIt's real water hours. :potable_water:\n\nTake a glass of water as fast as possible!\n", 
+        {
+            "message": "<@&572540171678121984>\n\n:exclamation::exclamation:W A R N I N G:exclamation::exclamation:\n\nIt's real water hours. :potable_water:\n\nTake a glass of water as fast as possible!\n",
             "url": "https://cdn.discordapp.com/attachments/475377868738920448/632546413733085195/unknown.png",
-            "days": ["Tue","Wed"]
+            "days": [
+                "Tue",
+                "Wed"
+            ]
         },
-        { 
-            "message": "<@&572540171678121984>\n\n:exclamation::exclamation:W A R N I N G:exclamation::exclamation:\n\nWhy, yes, it's real water hours. :potable_water:\n\nHumble men like me like having a sip at this hour of the day.\n", 
+        {
+            "message": "<@&572540171678121984>\n\n:exclamation::exclamation:W A R N I N G:exclamation::exclamation:\n\nWhy, yes, it's real water hours. :potable_water:\n\nHumble men like me like having a sip at this hour of the day.\n",
             "url": "https://cdn.discordapp.com/attachments/475377868738920448/653530649264783360/image0.jpg",
-            "days": ["Fri","Sat"]
+            "days": [
+                "Fri",
+                "Sat"
+            ]
         },
-        { 
-            "message": "<@&572540171678121984>\n\n:exclamation::exclamation:W A R N I N G:exclamation::exclamation:\n\nuwu\nI-It's real water hours. :potable_water:\n\nTake a glass of water as fast as possible, b-baka!\n", 
+        {
+            "message": "<@&572540171678121984>\n\n:exclamation::exclamation:W A R N I N G:exclamation::exclamation:\n\nuwu\nI-It's real water hours. :potable_water:\n\nTake a glass of water as fast as possible, b-baka!\n",
             "url": "https://pbs.twimg.com/media/ECIQzogWsAEtD6F?format=jpg&name=medium",
-            "days": ["Sun","Thu"]
+            "days": [
+                "Sun",
+                "Thu"
+            ]
         }
     ]
 }
