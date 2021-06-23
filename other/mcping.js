@@ -1,3 +1,5 @@
+//DEPRECATED - I now use eu.mc-api.net instead
+
 //MC Server Ping
 //2019 - Made by Ermelber
 

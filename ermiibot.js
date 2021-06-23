@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const Discord = require('discord.js');
-const { prefix, token, youtubeApiKey } = require('./settings.json');
+const { prefix, token } = require('./settings.json');
 const client = new Discord.Client();
 //client.music = new require("discord.js-musicbot-addon");
 

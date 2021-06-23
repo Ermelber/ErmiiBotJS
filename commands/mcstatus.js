@@ -1,23 +1,57 @@
+
+const { mcHostName } = require('../settings.json');
+
 module.exports = {
     name: 'mcstatus',
     aliases: ['mc'],
 	description: 'Minecraft Server Status',
     execute(message, args) 
     {
-        getInfo(message, args[0], args[1]);
+        getInfo(message, args[0]);
 	},
 };
 
-function getInfo(message, hostname, port)
+
+function ping(hostname, complete)
 {
-    var ms = require("./../other/mcping.js");
+    var http = require("https");
 
-    hostname = hostname == null ? "dshack.ddns.net" : hostname;
-    port = port == null ? 25565 : port;
+    var options = {
+        "method": "GET",
+        "hostname": "eu.mc-api.net",
+        "port": null,
+        "path": "/v3/server/ping/" + hostname,
+        "headers": {}
+    };
 
-    ms.getServerData(hostname, port, (response, data) =>
-    {
-        if(response == "ok")
+    var req = http.request(options, function (res) {
+    var chunks = [];
+
+    res.on("data", function (chunk) {
+        chunks.push(chunk);
+    });
+
+    res.on("end", function () {
+        var body = Buffer.concat(chunks);
+        
+        if (complete)
+        {
+            complete(JSON.parse(body.toString()));
+        }
+    });
+    });
+
+    req.end();
+}
+
+
+
+function getInfo(message, hostname)
+{
+    hostname = hostname == null ? mcHostName : hostname;
+
+    ping(hostname, (data) => {
+        if(data.status && data.online)
         {
             fields = 
             [
@@ -57,8 +91,8 @@ function getInfo(message, hostname, port)
                     author: 
                     {
                         name : "Minecraft Server Status",
-                        url : `https://eu.mc-api.net/v3/server/favicon/${hostname}:${port}`,
-                        icon_url : `https://eu.mc-api.net/v3/server/favicon/${hostname}:${port}`
+                        url : data.favicon,
+                        icon_url : data.favicon
                     },
                     color: 3447003,
                     fields: fields
@@ -70,5 +104,4 @@ function getInfo(message, hostname, port)
             message.reply("couldn't reach the server.");
         }
     });
-
 }
