@@ -6,8 +6,6 @@ module.exports = {
 	description: 'Dynamically reloads bot\'s files',
     execute(message, args) 
     {
-        console.log(adminUserIds);
-
         if (!adminUserIds || !adminUserIds.includes(message.author.id))
         {
             message.reply("you don't have permission for this!");
