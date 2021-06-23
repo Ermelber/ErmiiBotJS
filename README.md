@@ -28,3 +28,5 @@ Whenever you want to start the bot just run ``node .``
 - Sending pizza images (important)
 - Uptime command to brag about server uptime
 - Maybe more, who knows
+
+Since this bot is nothing special you are free to fork it and do whatever you want with it.
