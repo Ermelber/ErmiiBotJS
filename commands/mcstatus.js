@@ -9,43 +9,12 @@ module.exports = {
     },
 };
 
-
-function ping(hostname, complete) {
-    var http = require("https");
-
-    var options = {
-        "method": "GET",
-        "hostname": "eu.mc-api.net",
-        "port": null,
-        "path": "/v3/server/ping/" + hostname,
-        "headers": {}
-    };
-
-    var req = http.request(options, function (res) {
-        var chunks = [];
-
-        res.on("data", function (chunk) {
-            chunks.push(chunk);
-        });
-
-        res.on("end", function () {
-            var body = Buffer.concat(chunks);
-
-            if (complete) {
-                complete(JSON.parse(body.toString()));
-            }
-        });
-    });
-
-    req.end();
-}
-
-
-
 function getInfo(message, hostname) {
+    let mc = require("../other/minecraft.js");
+
     hostname = hostname == null ? mcHostName : hostname;
 
-    ping(hostname, (data) => {
+    mc.ping(hostname, (data) => {
         if (data.status && data.online) {
             fields =
                 [
