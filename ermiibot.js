@@ -64,20 +64,17 @@ function logger(type, message, commandName, error) {
     }
 }
 
-function waterInit() {
-    var water = require("./other/water.js");
-    setInterval(() => {
-        water.checkWaterHour(client);
-    }, 60000);
-}
+function initEvents() {
+    let events = require("./events/events.js");
 
-//var ms = require("./other/mcping.js");
+    events.init(client);
+}
 
 client.once('ready', () => {
     client.user.setActivity(`${prefix}help`);
     logger("ready");
 
-    waterInit();
+    initEvents();
 });
 
 
