@@ -8,7 +8,7 @@ module.exports =
 
         let players = [];
 
-        timer.create(60000, () => {
+        timer.create(60000 * 5, () => {
             let channel = client.channels.get("394899930587856896"); //microsofts_minecraft (Haroohie MK Pals)
 
             mc.ping(mcHostName, (data) => {
