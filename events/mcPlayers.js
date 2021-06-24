@@ -13,6 +13,9 @@ module.exports =
 
             mc.ping(mcHostName, (data) => {
                 var currentPlayers = data.players.sample == null ? [] : data.players.sample;
+                
+                console.log("Checking players...")
+                console.log(currentPlayers);
 
                 if (isDifferent(players, currentPlayers)) {
                     fields =
@@ -42,7 +45,7 @@ module.exports =
                         {
                             author:
                             {
-                                name: "Player joined/left",
+                                name: "Player(s) joined/left",
                                 url: data.favicon,
                                 icon_url: data.favicon
                             },
@@ -58,6 +61,27 @@ module.exports =
     }
 }
 
+function compareName(a, b) {
+    // converting to uppercase to have case-insensitive comparison
+    const name1 = a.name.toUpperCase();
+    const name2 = b.name.toUpperCase();
+
+    let comparison = 0;
+
+    if (name1 > name2) {
+        comparison = 1;
+    } else if (name1 < name2) {
+        comparison = -1;
+    }
+    return comparison;
+}
+
 function isDifferent(arr1, arr2) {
+    if (arr1.length != arr2.length)
+        return true;
+
+    arr1 = arr1.sort(compareName);
+    arr2 = arr2.sort(compareName);
+
     return JSON.stringify(arr1) != JSON.stringify(arr2);
 }
