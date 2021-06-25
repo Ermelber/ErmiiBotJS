@@ -12,52 +12,56 @@ module.exports =
             let channel = client.channels.get("394899930587856896"); //microsofts_minecraft (Haroohie MK Pals)
 
             mc.ping(mcHostName, (data) => {
-                var currentPlayers = data.players.sample == null ? [] : data.players.sample;
-                
-                console.log("Checking players...")
-                console.log(currentPlayers);
+                if (data.status && data.online) {
+                    var currentPlayers = data.players.sample == null ? [] : data.players.sample;
 
-                if (isDifferent(players, currentPlayers)) {
-                    fields =
-                        [
-                            {
-                                name: `Currently playing`,
-                                value: `${data.players.online}/${data.players.max}`
+                    console.log("Checking players...")
+                    console.log(currentPlayers);
+
+                    if (isDifferent(players, currentPlayers)) {
+                        fields =
+                            [
+                                {
+                                    name: `Currently playing`,
+                                    value: `${data.players.online}/${data.players.max}`
+                                }
+                            ];
+
+                        if (data.players.sample != null) {
+                            var playerList = "";
+
+                            for (var i = 0; i < data.players.sample.length; i++) {
+                                var player = data.players.sample[i];
+                                playerList += player.name + "\n";
                             }
-                        ];
 
-                    if (data.players.sample != null) {
-                        var playerList = "";
-
-                        for (var i = 0; i < data.players.sample.length; i++) {
-                            var player = data.players.sample[i];
-                            playerList += player.name + "\n";
+                            fields.push({
+                                name: `Players`,
+                                value: playerList
+                            });
                         }
 
-                        fields.push({
-                            name: `Players`,
-                            value: playerList
+                        channel.send({
+                            embed:
+                            {
+                                author:
+                                {
+                                    name: "Player(s) joined/left",
+                                    url: data.favicon,
+                                    icon_url: data.favicon
+                                },
+                                color: 3447003,
+                                fields: fields
+                            }
                         });
                     }
 
-                    channel.send({
-                        embed:
-                        {
-                            author:
-                            {
-                                name: "Player(s) joined/left",
-                                url: data.favicon,
-                                icon_url: data.favicon
-                            },
-                            color: 3447003,
-                            fields: fields
-                        }
-                    });
+                    players = currentPlayers;
                 }
-
-                players = currentPlayers;
             });
+
         });
+
     }
 }
 
